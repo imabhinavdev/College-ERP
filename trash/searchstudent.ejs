@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search Student details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Material Icons -->
+
+</head>
+<script src="/js/header.js"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+
+    body {
+        font-family: 'Poppins', sans-serif !important;
+
+    }
+
+    h5 {
+        font-weight: 800 !important;
+        word-spacing: 4px !important;
+    }
+
+    button {
+        font-family: 'Poppins', sans-serif !important;
+        background-color: #4d44b4 !important;
+    }
+
+    p {
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 550 !important;
+    }
+
+    a {
+        background-color: #4d44b5 !important;
+    }
+
+    h2 {
+        color: #4d44b5 !important;
+    }
+
+    .mb-4 a {
+        background-color: white !important;
+    }
+
+    i {
+        cursor: pointer;
+        color: #4d44b5 !important;
+    }
+
+    button {
+        color: white !important;
+        border: none;
+        background: none;
+        outline: none;
+    }
+
+    #goBackButton {
+        background-color: white !important;
+        border-radius: 0px !important;
+    }
+</style>
+
+<body>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mt-4 mb-4">
+                        <!-- <a href="./search_student_details.html"><i class="material-icons">arrow_back</i></a> -->
+                        <button id="goBackButton"><i class="material-icons">arrow_back</i></button>
+                        Search Student Details
+                    </h1>
+                    <% if (Data.length<1) {%>
+                        <p>No data Found</p>
+
+                        <% }else{ %>
+                </div>
+            </div>
+
+            <div class="row">
+                <% d=Data[0] %>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Enrollment
+                                        Number</label>
+                                    <p class="form-control enrollment " id="enrollment" name="enrollment">
+                                        <%= d.Enrollment_No %>
+                                    </p>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <p class="form-control">
+                                        <%= d.Name %>
+                                    </p>
+
+
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <p class="form-control">
+                                        <%= d.Email %>
+                                    </p>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editGender" class="form-label">Gender</label>
+                                    <p class="form-control">
+                                        <%= d.Gender %>
+                                    </p>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Mobile</label>
+                                    <p class="form-control">
+                                        <%= d.Mobile_no%>
+                                    </p>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editDOB" class="form-label">Date of
+                                        Birth</label>
+                                    <p class="form-control">
+                                        <%= d.DOB %>
+                                    </p>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="editGuardianName" class="form-label">Guardians
+                                            Name</label>
+                                        <p class="form-control">
+                                            <%= d.Guardians_Name %>
+                                        </p>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editGuardianNumber" class="form-label">Guardians
+                                            Number</label>
+                                        <p class="form-control">
+                                            <%= d.Guardians_Mobile %>
+                                        </p>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editCGPA" class="form-label">CGPA</label>
+                                        <p class="form-control">
+                                            <%= d.CGPA %>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editCourse" class="form-label">Course</label>
+                                        <p class="form-control">
+                                            <%= d.Course %>
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editProgramme" class="form-label">Programme</label>
+                                        <p class="form-control">
+                                            <%= d.Programme %>
+                                        </p>
+                                    </div>
+
+
+                                    <div class="d-flex justify-content-between">
+                                        <!-- <form action="" onsubmit="return confirmDelete();">
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                        </form> -->
+                                        <form id="editstudentForm" method="POST" action="/admin/editstudent">
+                                            <input type="hidden" name="jsonData" id="studentdatainput">
+                                        </form>
+                                        <button type="button" class="btn btn-primary" onclick="editstudentDetails()">
+                                            Edit
+                                        </button>
+                                    </div>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function editstudentDetails() {
+            console.log("Function Working");
+            const idElement = document.querySelector('#enrollment');
+            if (idElement) {
+                const id = idElement.textContent.trim();
+                const facultyData = { id };
+                const jsonData = JSON.stringify(facultyData);
+                document.getElementById('studentdatainput').value = jsonData;
+                console.log(document.getElementById('studentdatainput').value);
+                document.getElementById('editstudentForm').submit();
+            } else {
+                console.error('ID element not found.');
+            }
+        }
+    </script>
+    <script>
+        // Function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        // Add click event listener to the button
+        const backButton = document.getElementById("goBackButton");
+        backButton.addEventListener("click", goBack);
+    </script>
+
+    <script>
+        function confirmDelete() {
+            // Display a confirmation dialog
+            const confirmation = confirm("Are you sure you want to delete?");
+
+            // Return true to allow form submission if the user confirms
+            // Return false to prevent form submission if the user cancels
+            return confirmation;
+        }
+
+    </script>
+</body>
+
+</html>
