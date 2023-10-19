@@ -9,7 +9,7 @@ app.use(express.static('public'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// ------------Routes---------------
+// ------------Importing Routes---------------
 const adminRoute = require('./routes/adminRoute')
 const facultyRoute = require('./routes/facultyRoute')
 const studentRoute = require('./routes/studentRoute');
