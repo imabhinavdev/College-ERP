@@ -357,28 +357,43 @@ const savefaculty = async (req, res) => {
 
 
 // ---------------------------Adding Student, Subject, Faculty----------------------------------------->
-
 const addfaculty = async (req, res) => {
     console.log(req.body);
 
     try {
-
-        const { error } = await supabase
+        const { error: errorFacultyDetails } = await supabase
             .from('Faculty_Details')
             .insert({
-                email: req.body.email, Name: req.body.name, Mobile: req.body.mobile, Gender: req.body.gender, Designation: req.body.Designation, Branch: 'CSE', Qualifications: req.body.Qualification, DOB: req.body.dob
-            })
-        if (error) {
-            console.log(error);
-        }
-        else {
+                email: req.body.email,
+                Name: req.body.name,
+                Mobile: req.body.mobile,
+                Gender: req.body.gender,
+                Designation: req.body.Designation,
+                Branch: 'CSE',
+                Qualifications: req.body.Qualification,
+                DOB: req.body.dob
+            });
+
+        const { error: errorUsers } = await supabase
+            .from('Users')
+            .insert({
+                Email: req.body.email,
+                Name: req.body.name,
+                User: 2,
+                Password: "$2b$10$.Q87HwZ1CePFk.iFFFvvZ.5sCpeNI8VLhobeLd5MmCwFj0GAq6hWe"
+            });
+
+        if (errorFacultyDetails || errorUsers) {
+            console.log("Error adding faculty:", errorFacultyDetails || errorUsers);
+        } else {
             res.send(`<script>alert("Faculty Added Successfully"); window.location.href = "/admin/dashboard";</script>`);
         }
+    } catch (error) {
+        console.error("Error in addfaculty function:", error);
+        res.status(500).send("Internal Server Error");
     }
-    catch {
+};
 
-    }
-}
 const addstudent = async (req, res) => {
     console.log(req.body);
     email = req.body.name
@@ -386,15 +401,28 @@ const addstudent = async (req, res) => {
 
     try {
 
-        const { error } = await supabase
+        const { error: errorStudentDetails } = await supabase
             .from('Student_Details')
             .insert({
                 Enrollment_No: req.body.enrollment, Name: req.body.name, Email: req.body.email, Mobile_no: req.body.mobile, Gender: req.body.gender, DOB: req.body.dob, Guardians_Mobile: req.body.guardianmobile, Guardians_Name: req.body.guardianName, CGPA: req.body.cgpa, Course: req.body.course, Programme: req.body.programme
             })
-        if (error) {
-            console.log(error);
-            res.send(`<script>alert("Error ! Can not be inserted. One or more values are already present in Db"); window.location.href = "/admin/dashboard";</script>`);
+
+        const { error: errorUsers } = await supabase
+            .from('Users')
+            .insert({
+                Email: req.body.email,
+                Name: req.body.name,
+                User: 3,
+                Password: "$2b$10$.Q87HwZ1CePFk.iFFFvvZ.5sCpeNI8VLhobeLd5MmCwFj0GAq6hWe"
+            });
+
+        if (errorStudentDetails || errorUsers) {
+            console.log("Error adding faculty:", errorStudentDetails || errorUsers);
+            if (errorStudentDetails.code === '23505') {
+                res.send(`<script>alert("Student Adding Failed. Already have same enrollment number"); window.location.href = "/admin/dashboard";</script>`);
+            }
         }
+
         else {
             res.send(`<script>alert("Student Added Successfully"); window.location.href = "/admin/dashboard";</script>`);
         }

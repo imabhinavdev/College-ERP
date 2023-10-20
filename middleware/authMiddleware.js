@@ -9,12 +9,12 @@ const authController = require('../controllers/authController');
 
 
 router.get('/login', async (req, res) => {
-    const token = req.cookies.erpLoggedin; // Retrieve the token from the cookie
+    const token = req.cookies.erpLoggedin;
     const userR = req.cookies.erpUser;
 
     console.log("new token", token);
     if (!token) {
-        return res.render('login.ejs', { errorMessage: null }); // Redirect to login if no token
+        return res.render('login.ejs', { errorMessage: null }); 
     }
 
     if (userR == 1) {
