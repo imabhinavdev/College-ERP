@@ -2,39 +2,98 @@ const express = require('express');
 const supabase = require('../client');
 const path = require('path');
 const adminRoute = require('../routes/adminRoute')
+const adminController = require('../controllers/adminController')
+const studentController = require('../controllers/studentController')
+const facultyController = require('../controllers/facultyController')
 
 
 const router = express.Router();
 const authController = require('../controllers/authController');
 
+router.get('/admin/login', async (req, res) => {
 
-router.get('/login', async (req, res) => {
     const token = req.cookies.erpLoggedin;
     const userR = req.cookies.erpUser;
 
     console.log("new token", token);
     if (!token) {
-        return res.render('login.ejs', { errorMessage: null }); 
+        return res.render('admin/login.ejs', { errorMessage: null });
     }
-
-    if (userR == 1) {
-
+    else if (userR == 'isAdmin') {
         res.redirect('/admin/dashboard');
-    }
-    else if (userR == 2) {
 
+    }
+    else {
+        let altUser;
+        if (userR === "isFaculty") {
+            altUser = "Faculty";
+        }
+        else {
+            altUser = "Student"
+        }
+        res.send(`<script>alert("Login failed. Already Logged in with ${altUser} account"); window.location.href = "/";</script>`);
+
+    }
+})
+router.get('/faculty/login', async (req, res) => {
+
+    const token = req.cookies.erpLoggedin;
+    const userR = req.cookies.erpUser;
+
+    console.log("new token", token);
+    if (!token) {
+        return res.render('faculty/login.ejs', { errorMessage: null });
+    }
+
+    else if (userR == 'isFaculty') {
         res.redirect('/faculty/dashboard');
 
     }
-    else if (userR == 3) {
+    else {
+        let altUser;
+        if (userR === "isAdmin") {
+            altUser = "Admin";
+        }
+        else {
+            altUser = "Student"
+        }
+        res.send(`<script>alert("Login failed. Already Logged in with ${altUser} account"); window.location.href = "/";</script>`);
 
+    }
+})
+router.get('/student/login', async (req, res) => {
+
+    const token = req.cookies.erpLoggedin;
+    const userR = req.cookies.erpUser;
+
+    console.log("new token", token);
+    if (!token) {
+        return res.render('student/login.ejs', { errorMessage: null });
+    }
+
+    else if (userR == 'isStudent') {
         res.redirect('/student/dashboard');
 
     }
 
-});
+    else {
+        let altUser;
+        if (userR === "isAdmin") {
+            altUser = "Admin";
+        }
+        else {
+            altUser = "Faculty"
+        }
+        res.send(`<script>alert("Login failed. Already Logged in with ${altUser} account"); window.location.href = "/";</script>`);
 
-router.post('/login', authController.login);
+
+    }
+})
+
+
+router.post('/admin/login', adminController.login);
+router.post('/faculty/login', facultyController.login);
+router.post('/student/login', studentController.login);
 
 router.get('/forgotPassword', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'html', 'forgotPassword.html'))
@@ -54,7 +113,7 @@ const isAdmin = (req, res, next) => {
     if (!token) {
         return res.redirect("/auth/login");
     }
-    if (userR == 1) {
+    if (userR == 'isAdmin') {
 
         next();
     }
@@ -72,7 +131,7 @@ const isFaculty = (req, res, next) => {
     if (!token) {
         return res.redirect("/auth/login");
     }
-    if (userR == 2) {
+    if (userR == 'isFaculty') {
 
         next();
     }
@@ -90,7 +149,7 @@ const isStudent = (req, res, next) => {
     if (!token) {
         return res.redirect("/auth/login");
     }
-    if (userR == 3) {
+    if (userR == 'isStudent') {
 
         next();
     }

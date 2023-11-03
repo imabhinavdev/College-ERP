@@ -7,29 +7,34 @@ const adminController = require('../controllers/adminController')
 
 // All Get Method
 router.get('/dashboard', (req, res) => {
-    res.render('admin/adminDashboard.ejs')
+    username = req.cookies.erpUserName
+    console.log(username);
+    res.render('admin/adminDashboard.ejs', { username: username })
 })
-router.get('/manageFaculty', adminController.managefaculty)
-router.get('/managestudent', adminController.managestudent)
-router.get('/managesubject', adminController.managesubject)
-router.get('/facultytable', adminController.facultytable)
-router.get('/studenttable', adminController.studenttable)
-
-router.get('/markAttendance', adminController.markAttendance)
-router.get('/allFacultyDetails', adminController.allFacultyDetails)
+router.get('/managefaculty', adminController.manageFaculty)
+router.get('/searchfaculty', adminController.searchFaculty)
+router.get('/searchstudent', adminController.searchStudent)
+router.get('/searchsubject', adminController.searchSubject)
+router.get('/managestudent', adminController.manageStudent);
+router.get('/facultytable', adminController.facultyTable);
+router.get('/studenttable', adminController.studentTable);
+router.get('/subjecttable', adminController.subjectTable);
+router.get('/managesubject', adminController.manageSubject)
+router.get('/gettgids', adminController.getTgids)
 
 
 // All Post Method
-router.post('/facultytable', adminController.facultytable)
-router.post('/searchfaculty', adminController.searchfaculty)
-router.post('/editfacultydetails', adminController.editfacultydetails)
-router.post('/singleStudentDetail', adminController.singleStudentDetail)
-router.post('/addfaculty', adminController.addfaculty)
-router.post('/savefaculty', adminController.savefaculty)
-router.post('/searchstudent', adminController.searchstudent)
-router.post('/editstudent', adminController.editstudent)
-router.post('/addstudent', adminController.addstudent)
-router.post('/savestudent', adminController.savestudent)
+router.post('/addfaculty', adminController.addFaculty);
+router.post('/addstudent', adminController.addStudent);
+router.post('/addsubject', adminController.addSubject);
+router.post('/singlefaculty', adminController.singleFaculty)
+router.post('/singlestudent', adminController.singleStudent)
+router.post('/facultyeditdetails', adminController.facultyeditDetails)
+router.post('/updatefaculty', adminController.updateFaculty)
+router.post('/updatestudent', adminController.updateStudent)
+router.post('/editstudentdetails', adminController.editStudentDetails)
+router.post('/editsubjectdetails', adminController.editSubjectDetails)
+router.post('/singlesubject', adminController.singleSubject)
 
 
 // Already logged in check

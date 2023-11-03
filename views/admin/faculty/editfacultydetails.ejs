@@ -61,103 +61,124 @@
 <body>
 
 
-    <div class="container">
+    <div class="container mb-3">
 
         <div class="row">
             <div class="col-md-12">
                 <h1 class="mt-4 mb-4"> <button id="goBackButton"><i class="material-icons">arrow_back</i></button>
                     Edit Faculty Details</h1>
             </div>
-            <% Data.forEach(d=> {%>
-                <form action="/admin/savefaculty" method="post">
+            <form action="/admin/updatefaculty" method="post">
 
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <label for="exampleFormControlInput1" class="form-label">ID</label>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1" value="<%=d.id
-                                        %>" readonly name="id">
-                                    </div>
-                                    <div class=" mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="name" value="<%=d.Name
-                                        %>" name="name">
-                                    </div>
-                                    <div class=" mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" value="<%=d.email
-                                        %>" name="email">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="phone" class="form-label">Mobile</label>
-                                        <input type="phone" class="form-control" id="phone" value="<%=d.Mobile
-                                        %>" name="mobile">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="DOB" class="form-label">DOB</label>
-                                        <input type="date" class="form-control" id="DOB" value="<%=d.DOB
-                                                                            %>" name="DOB">
-                                    </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body ">
+
+                                <div class=" mb-3">
+                                    <label for="name" class="form-label">ID</label>
+                                    <input type="text" class="form-control" id="id" value="<%=d._id
+                                        %>" name="id" readonly>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="mb-3">
-                                        <label for="editGender" class="form-label">Gender</label>
+                                <div class=" mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" value="<%=d.name
+                                        %>" name="name">
+                                </div>
+                                <div class=" mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" value="<%=d.email
+                                        %>" name="email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tgid" class="form-label">TG ID</label>
+                                    <input type="text" class="form-control" id="tgid"
+                                        value="<%= d.tgid ? d.tgid : "NA" %>" name="tgid">
+                                </div>
 
-                                        <select class="form-select" id="editGender" name="gender">
-                                            <option value="Male" <% if (d.Gender==='Male' ) { %>selected<% } %>>Male
-                                            </option>
-                                            <option value="Female" <% if (d.Gender==='Female' ) { %>selected<% } %>
-                                                    >Female
-                                            </option>
-                                        </select>
-
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="editDesignation" class="form-label">Designation</label>
-                                        <select class="form-select" id="editDesignation" name="designation">
-                                            <option value="Professor" <% if (d.Designation==='Professor' ) { %>selected
-                                                <% } %>
-                                                    >Professor
-                                            </option>
-                                            <option value="Assistant Professor" <% if
-                                                (d.Designation==='Assistant Professor' ) { %>
-                                                selected<% } %>>Assistant Professor
-                                            </option>
-                                            <option value="Head of Department" <% if
-                                                (d.Designation==='Head of Department' ) { %>
-                                                selected<% } %>>Head
-                                                    of Department</option>
-                                        </select>
-
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="qualification" class="form-label">Qualification</label>
-                                        <select class="form-select" id="qualification" name="qualification">
-                                            <option value="B.Tech" <%=d.Qualifications==="B.Tech" ? "selected" : "" %>
-                                                >B.Tech</option>
-                                            <option value="M.Tech" <%=d.Qualifications==="M.Tech" ? "selected" : "" %>
-                                                >M.Tech</option>
-                                            <option value="PHD" <%=d.Qualifications==="PHD" ? "selected" : "" %>>PHD
-                                            </option>
-                                        </select>
-                                    </div>
-
-                                    <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Mobile</label>
+                                    <input type="phone" class="form-control" id="phone" value="<%=d.mobile
+                                        %>" name="mobile">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="DOB" class="form-label">DOB</label>
+                                    <input type="date" class="form-control" id="DOB" value="<%=d.dob
+                                                                            %>" name="dob">
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-                <% }); %>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="editGender" class="form-label">Gender</label>
+
+                                    <select class="form-select" id="editGender" name="gender">
+                                        <option value="Male" <% if (d.gender==='Male' ) { %>selected<% } %>>Male
+                                        </option>
+                                        <option value="Female" <% if (d.gender==='Female' ) { %>selected<% } %>
+                                                >Female
+                                        </option>
+                                    </select>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editDesignation" class="form-label">Designation</label>
+                                    <select class="form-select" id="editDesignation" name="designation">
+                                        <option value="Professor" <% if (d.designation==='Professor' ) { %>selected
+                                            <% } %>
+                                                >Professor
+                                        </option>
+                                        <option value="Assistant Professor" <% if (d.designation==='Assistant Professor'
+                                            ) { %>
+                                            selected<% } %>>Assistant Professor
+                                        </option>
+                                        <option value="Head of Department" <% if (d.designation==='Head of Department' )
+                                            { %>
+                                            selected<% } %>>Head
+                                                of Department</option>
+                                    </select>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editDesignation" class="form-label">Designation</label>
+                                    <select class="form-select" id="course" required name="branch">
+                                        <option value="" disabled>Select a Course</option>
+                                        <option value="Computer Science & Eng" <% if
+                                            (d.qualifications==='Computer Science & Eng' ) { %>selected<% } %>
+                                                >Computer Science and Engineering</option>
+                                        <option value="Artificial Intelligence" <% if
+                                            (d.qualifications==='Artificial Intelligence' ) { %>selected<% } %>
+                                                >AI&DS
+                                        </option>
+                                        <option value="Cybersecurity" <% if (d.qualifications==='Cybersecurity' ) { %>
+                                            selected<% } %> >Cyber Security
+                                        </option>
+                                    </select>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="qualification" class="form-label">Qualification</label>
+                                    <select class="form-select" id="qualification" name="qualification">
+                                        <option value="B.Tech" <%=d.dualifications==="B.Tech" ? "selected" : "" %>
+                                            >B.Tech</option>
+                                        <option value="M.Tech" <%=d.dualifications==="M.Tech" ? "selected" : "" %>
+                                            >M.Tech</option>
+                                        <option value="PHD" <%=d.dualifications==="PHD" ? "selected" : "" %>>PHD
+                                        </option>
+                                    </select>
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 

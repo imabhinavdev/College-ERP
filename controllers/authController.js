@@ -55,7 +55,7 @@ const login = async function login(req, res) {
                         res.redirect('/faculty/dashboard');
 
                     }
-                    else if (userR ==3 ) {
+                    else if (userR == 3) {
 
                         res.redirect('/student/dashboard');
 
@@ -104,7 +104,8 @@ const login = async function login(req, res) {
 // }
 const logout = async function logout(req, res) {
     res.clearCookie('erpLoggedin');
-    res.redirect('/auth/login');
+    res.redirect('/');
+    console.log("Logged Out !!!!");
 }
 
 

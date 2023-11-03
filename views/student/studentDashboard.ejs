@@ -5,12 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
-        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Google Material Icons -->
-
     <script src="/js/studentHeader.js"></script>
 
     <style>
@@ -51,118 +48,113 @@
         }
 
         #myChart {
-            max-width: 40%;
+            max-width: 100%;
             height: auto;
-            float: left;
         }
 
         .new-card {
-            max-width: 40%;
+            max-width: 100%;
             background-color: #f0f0f0;
             padding: 20px;
             margin-top: 40px;
-            margin-left: 80px;
         }
     </style>
 </head>
 
 <body>
-    <!-- Home Page Card Starting -->
     <div class="container text-center">
         <div class="row mt-4">
-            <div class="card-body">
+            <div class="col-md-6">
                 <canvas class="my-4 " id="myChart"></canvas>
-                <div class="new-card">
-                    <h2>Attendance Summary</h2>
-                    <p>Total Working Days: <span id="totalWorkingDays">0</span></p>
-                    <p>Total Present: <span id="totalPresent">0</span></p>
-                    <p>Total Absent: <span id="totalAbsent">0</span></p>
-                </div>
             </div>
-            <!-- </div> -->
-            <div class="container mt-5">
-                <h1>Student Attendance</h1>
-                <div class="card">
-                    <div class="card-header">
-                        Date Wise Attendance
-                    </div>
-                    <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">DATE</th>
-                                    <th scope="col">ATTENDANCE STATUS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">10-02-2023</th>
-                                    <td><i class="material-icons" style="color: red;">close</i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
+            <div class="col-md-6">
+                <div class="card-body">
+                    <div class="new-card">
+                        <h2>Attendance Summary</h2>
+                        <p>Total Working Days: <span id="totalWorkingDays">0</span></p>
+                        <p>Total Present: <span id="totalPresent">0</span></p>
+                        <p>Total Absent: <span id="totalAbsent">0</span></p>
                     </div>
                 </div>
             </div>
-            <script>var ctx = document.getElementById("myChart");
-
-                var myChart = new Chart(ctx, {
-                    type: "doughnut",
-                    data: {
-                        labels: ["Present", "Absent"],
-                        datasets: [
-                            {
-                                data: [70, 30],
-                                backgroundColor: ["#4d44b5", "#ff5733"],
-                                borderColor: "#007bff",
-                                borderWidth: 4,
-                                pointBackgroundColor: "#007bff",
-                            },
-                        ],
-                    },
-                    options: {
-                        cutoutPercentage: 70,
-                        scales: {
-                            xAxes: [
-                                {
-                                    display: false,
-                                },
-                            ],
-                            yAxes: [
-                                {
-                                    display: false,
-                                    ticks: {
-                                        beginAtZero: false,
-                                    },
-                                },
-                            ],
-                        },
-                        legend: {
+        </div>
+        <div class="container mt-5">
+            <h1>Student Attendance</h1>
+            <div class="card">
+                <div class="card-header">
+                    Date Wise Attendance
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">DATE</th>
+                                <th scope="col">ATTENDANCE STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">10-02-2023</th>
+                                <td><i class="material-icons" style="color: red;">close</i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Present", "Absent"],
+                    datasets: [{
+                        data: [70, 30],
+                        backgroundColor: ["#4d44b5", "#ff5733"],
+                        borderColor: "#007bff",
+                        borderWidth: 4,
+                        pointBackgroundColor: "#007bff",
+                    },],
+                },
+                options: {
+                    cutoutPercentage: 70,
+                    scales: {
+                        xAxes: [{
                             display: false,
-                        },
+                        },],
+                        yAxes: [{
+                            display: false,
+                            ticks: {
+                                beginAtZero: false,
+                            },
+                        },],
                     },
-                });
-            </script>
-            <script>
-                const attendanceData = [
-                    { date: "10-02-2023", status: "absent" },
-                    // Add more data here
-                ];
+                    legend: {
+                        display: false,
+                    },
+                },
+            });
+        </script>
+        <script>
+            const attendanceData = [
+                { date: "10-02-2023", status: "absent" },
+                // Add more data here
+            ];
 
-                // Function to calculate totals and update the HTML elements
-                function calculateAttendanceTotals() {
-                    const totalWorkingDays = attendanceData.length;
-                    const totalPresent = attendanceData.filter(entry => entry.status === "present").length;
-                    const totalAbsent = attendanceData.filter(entry => entry.status === "absent").length;
+            // Function to calculate totals and update the HTML elements
+            function calculateAttendanceTotals() {
+                const totalWorkingDays = attendanceData.length;
+                const totalPresent = attendanceData.filter(entry => entry.status === "present").length;
+                const totalAbsent = attendanceData.filter(entry => entry.status === "absent").length;
 
-                    document.getElementById("totalWorkingDays").textContent = totalWorkingDays;
-                    document.getElementById("totalPresent").textContent = totalPresent;
-                    document.getElementById("totalAbsent").textContent = totalAbsent;
-                }
+                document.getElementById("totalWorkingDays").textContent = totalWorkingDays;
+                document.getElementById("totalPresent").textContent = totalPresent;
+                document.getElementById("totalAbsent").textContent = totalAbsent;
+            }
 
-                calculateAttendanceTotals();
-            </script>
+            calculateAttendanceTotals();
+        </script>
+    </div>
 </body>
 
 </html>

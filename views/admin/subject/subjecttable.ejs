@@ -56,17 +56,18 @@
                     <tr>
                         <th scope="col">Subject Code</th>
                         <th scope="col">Subject Name</th>
-                        <th scope="col">Assign Faculty</th>
+                        <th scope="col">Semester</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">CS501</th>
-                        <td>Theory of Computation</td>
-                        <td>Prof. Bhavna Gupta</td>
+                    <% Data.forEach(sub=>{ %>
+                        <tr>
+                            <th scope="row"><%= sub.code %></th>
+                            <td><%= sub.name %></td>
+                            <td><%= sub.semester %></td>
 
-                    </tr>
-
+                        </tr>
+                        <% }) %>
                 </tbody>
             </table>
         </div>

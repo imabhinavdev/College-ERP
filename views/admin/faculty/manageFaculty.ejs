@@ -35,7 +35,7 @@
         font-weight: 550 !important;
     }
 
-    a {
+    .btn {
         background-color: #4d44b5 !important;
     }
 
@@ -65,6 +65,49 @@
         background-color: azure !important;
         border-radius: 0px !important;
     }
+
+    .search-wrap {
+        display: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0px 0px 20px 5px rgba(128, 128, 128, 0.64);
+        margin-top: 5px;
+        padding: 10px;
+    }
+
+    .search-result {
+        list-style: none;
+        padding: 0;
+    }
+
+    .search-result li {
+        padding: 5px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        width: 100%;
+        display: flex;
+        align-items: stretch;
+    }
+
+
+    .search-result li:hover {
+        background-color: lightgray;
+    }
+
+    .search-a {
+
+        color: #000 !important;
+        text-decoration: none !important;
+        width: 100%;
+        height: 100%;
+
+    }
 </style>
 
 <body>
@@ -73,33 +116,39 @@
     <div class="container text-center">
 
         <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-        <div class="row mt-4">
-            <div class="col-6 col-md-4 mb-5">
-                <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-
-                    <div class="card-body">
-                        <h5 class="card-title">Search Faculty Details</h5>
-                        <p class="card-text">Search details of any Faculty by ID</p>
-                        <form class="d-flex" action="/admin/searchfaculty" method="post">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                                required name="id">
-                            <button class="btn btn-outline-success" type="submit">
-                                <span class=" material-symbols-outlined">search</span>
-                            </button>
-                        </form>
+        <div class="container text-center">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card shadow-lg p-3 mb-3 bg-body rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Search Faculty Details</h5>
+                                <p class="card-text">Search details of any Faculty by ID</p>
+                                <form class="d-flex" action="/admin/searchfaculty" method="post">
+                                    <input class="form-control me-2" type="search"
+                                        placeholder="Write atleast 3 characters" aria-label="search" required name="id"
+                                        id="search-bar">
+                                    <!-- <button class="btn btn-outline-success" type="submit">
+                                        <span class="material-symbols-outlined">search</span>
+                                    </button> -->
+                                </form>
+                                <div class="search-wrap" id="search-wrap">
+                                    <ul class="search-result" id="search-result"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                        <div class="card shadow-lg p-3 mb-3 bg-body rounded">
+                            <div class="card-body">
+                                <h5 class="card-title">Show Faculty Details</h5>
+                                <p class="card-text">All the details of Faculties</p>
+                                <a href="/admin/facultytable" class="btn btn-primary">Show</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6 col-md-4 mb-5">
-                <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-                    <div class="card-body">
-                        <h5 class="card-title">Show Faculty Details</h5>
-                        <p class="card-text">All the details of Faculties</p>
-                        <a href="/admin/facultytable" class="btn btn-primary">Show</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
         <!-- Home Page Card Ending -------------- -->
     </div>
@@ -129,6 +178,80 @@
         // Add click event listener to the button
         const backButton = document.getElementById("goBackButton");
         backButton.addEventListener("click", goBack);
+    </script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchWrap = document.getElementById('search-wrap');
+            const searchBar = document.getElementById('search-bar');
+            const searchResults = document.getElementById('search-result');
+
+            searchBar.addEventListener('input', async () => {
+                const searchTerm = searchBar.value;
+
+                if (searchTerm.length >= 3) {
+                    searchWrap.style.display = 'block';
+                    console.log("working");
+
+                    const response = await fetch(`searchfaculty?term=${searchTerm}`);
+                    const items = await response.json();
+
+                    // Clear previous results
+                    searchResults.innerHTML = '';
+
+                    // Display the search results
+                    if (items.length === 0) {
+                        const li = document.createElement('li');
+                        li.textContent = "No Results Found";
+                        searchResults.appendChild(li);
+                    } else {
+                        items.forEach(item => {
+                            const li = document.createElement('li');
+
+                            // Create a link element with a POST request
+                            const link = document.createElement('a');
+                            link.textContent = item.name;
+                            link.href = '/admin/facultyeditdetails';
+                            link.classList.add('search-a');
+
+                            link.addEventListener('click', (event) => {
+                                event.preventDefault(); // Prevent default link behavior
+
+                                // Create a form for the POST request
+                                const form = document.createElement('form');
+                                form.method = 'POST';
+                                form.action = '/admin/singlefaculty';
+
+                                // Create an input field for the email
+                                const input = document.createElement('input');
+                                input.type = 'hidden'; // Hidden input
+                                input.name = 'email'; // Input name
+                                input.value = item.email; // Email value
+
+                                // Append the input to the form
+                                form.appendChild(input);
+
+                                // Append the form to the document and submit it
+                                document.body.appendChild(form);
+                                form.submit();
+                            });
+
+                            // Append the link to the list item
+                            li.appendChild(link);
+
+                            // Append the list item to the search results
+                            searchResults.appendChild(li);
+                        });
+                    }
+                } else {
+                    searchResults.innerHTML = '';
+                    searchWrap.style.display = 'none';
+                }
+            });
+        });
+
     </script>
 </body>
 

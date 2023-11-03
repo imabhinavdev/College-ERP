@@ -61,10 +61,10 @@
             <table class="table table-light table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">ID Number</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Mobile</th>
+                        <th scope="col">TG ID</th>
                         <th scope="col">Gender</th>
                         <th scope="col">Designation</th>
                         <th scope="col">Branch</th>
@@ -77,17 +77,9 @@
                     <% Data.forEach(Faculty=> { %>
 
                         <tr>
-                            <th scope="row">
-                                <!-- <% if (Faculty.TGID) {%>
 
-                                    <%=Faculty.TGID %>
-                                        <% } else { %>
-                                            None
-                                            <% } %> -->
-                                <%=Faculty.id %>
-                            </th>
                             <td>
-                                <%=Faculty.Name %>
+                                <%=Faculty.name %>
                             </td>
                             <td>
                                 <!-- <a href="mailto:<%=Faculty.email %>"> -->
@@ -95,22 +87,26 @@
                                     <!-- </a> -->
                             </td>
                             <td>
-                                <%=Faculty.Mobile %>
+                                <%=Faculty.mobile %>
                             </td>
                             <td>
-                                <%=Faculty.Gender %>
+                                <%= Faculty.tgid ? Faculty.tgid : "NA" %>
+
                             </td>
                             <td>
-                                <%=Faculty.Designation %>
+                                <%=Faculty.gender %>
                             </td>
                             <td>
-                                <%=Faculty.Branch %>
+                                <%=Faculty.designation %>
                             </td>
                             <td>
-                                <%=Faculty.Qualifications %>
+                                <%=Faculty.branch %>
                             </td>
                             <td>
-                                <%=Faculty.DOB %>
+                                <%=Faculty.qualifications %>
+                            </td>
+                            <td>
+                                <%=Faculty.dob %>
                             </td>
 
                         </tr>

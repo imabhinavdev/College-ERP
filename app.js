@@ -14,8 +14,11 @@ const adminRoute = require('./routes/adminRoute')
 const facultyRoute = require('./routes/facultyRoute')
 const studentRoute = require('./routes/studentRoute');
 const authMiddleware = require('./middleware/authMiddleware')
-
 const markedAttendance = require('./controllers/markedAttendance')
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017');
+app.set('view-engine', 'ejs')
+
 app.get('/marking', markedAttendance);
 
 app.use('/auth', authMiddleware.router)
@@ -56,3 +59,4 @@ app.listen(3000, () => {
 //         });
 //     }
 // })
+// $2b$10$16MsiFej61u3ULfsQzdeLuakUOZcAAFpMLL7QEDL40C0pJBR7WIKi

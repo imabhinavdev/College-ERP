@@ -14,6 +14,7 @@
 
     <div class="login-card">
         <h2>SISTec ERP Login</h2>
+        <h2>Faculty Login</h2>
         <h3>Enter your credentials</h3>
         <% if (errorMessage) { %>
             <p class="error">
@@ -21,7 +22,7 @@
             </p>
             <% } %>
 
-                <form class="login-form" method="post" action="/auth/login">
+                <form class="login-form" method="post" action="/auth/faculty/login">
                     <input type="email" placeholder="Username" name="username" required>
                     <div class="password-container">
                         <input type="password" placeholder="Password" name="password" id="password" required>
