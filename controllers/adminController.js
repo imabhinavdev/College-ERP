@@ -11,6 +11,7 @@ const admin = require('../models/admin');
 const faculty = require('../models/faculty')
 const student = require('../models/student')
 const subject = require('../models/subject')
+const Attendance = require('../models/attendance')
 // const asyncHandler = require("express-async-handler");
 
 
@@ -63,6 +64,8 @@ const login = async (req, res) => {
 const addFaculty = async (req, res) => {
     console.log(req.body);
     try {
+        const originalTgid = req.body.tgid;
+        const cleanedTgid = originalTgid.replace(/\s/g, '');
         const user = new faculty({
             name: req.body.name,
             email: req.body.email,
@@ -70,7 +73,7 @@ const addFaculty = async (req, res) => {
             qualifications: req.body.qualification,
             mobile: req.body.mobile,
             designation: req.body.designation,
-            tgid: req.body.tgid,
+            tgid: cleanedTgid,
             branch: req.body.branch,
             dob: req.body.dob
         })
@@ -129,7 +132,7 @@ const searchFaculty = async (req, res) => {
 };
 const facultyTable = async (req, res) => {
     try {
-        const data = await faculty.find({})
+        const data = await faculty.find({}).sort('name');
         console.log(data);
         res.render('admin/faculty/facultytable', { Data: data });
     }
@@ -156,6 +159,8 @@ const updateFaculty = async (req, res) => {
     console.log("balleeee ");
     console.log(req.body);
     try {
+        const originalTgid = req.body.tgid;
+        const cleanedTgid = originalTgid.replace(/\s/g, '');
         let user = await faculty.findOne({ _id: req.body.id })
         console.log("Oyrrrrrrr " + user);
         user.name = req.body.name
@@ -165,7 +170,7 @@ const updateFaculty = async (req, res) => {
         user.mobile = req.body.mobile
         user.designation = req.body.designation
         user.branch = req.body.branch
-        user.tgid = req.body.tgid
+        user.tgid = cleanedTgid
         user.dob = req.body.dob
         await user.save()
         res.send(`<script>alert("Changes Saved"); window.location.href = "/admin/managefaculty";</script>`);
@@ -187,7 +192,10 @@ const manageStudent = (req, res) => {
 
 const addStudent = async (req, res) => {
     console.log(req.body);
+    ;
     try {
+        const originalTgid = req.body.tgid;
+        const cleanedTgid = originalTgid.replace(/\s/g, '')
         const user = new student({
             name: req.body.name,
             enrollment: req.body.enrollment,
@@ -198,11 +206,15 @@ const addStudent = async (req, res) => {
             programme: req.body.programme,
             guardianMobile: req.body.guardianMobile,
             guardianName: req.body.guardianName,
-            tgid: req.body.tgid,
+            tgid: cleanedTgid,
             cgpa: req.body.cgpa,
             dob: req.body.dob
         })
         await user.save();
+        const attend = new Attendance({
+            student: user._id
+        })
+        attend.save();
         res.send(`<script>alert("Student addeed successfully"); window.location.href = "/admin/dashboard";</script>`);
 
     }
@@ -242,7 +254,7 @@ const searchStudent = async (req, res) => {
 
 const studentTable = async (req, res) => {
     try {
-        const data = await student.find({})
+        const data = await student.find({}).sort('enrollment');
         console.log(data);
         res.render('admin/student/studenttable', { Data: data });
     }
@@ -282,6 +294,8 @@ const editStudentDetails = async (req, res) => {
 
 const updateStudent = async (req, res) => {
     try {
+        const originalTgid = req.body.tgid;
+        const cleanedTgid = originalTgid.replace(/\s/g, '');
         const data = await student.findOne({ _id: req.body.id })
         data.name = req.body.name;
         data.enrollment = req.body.enrollment;
@@ -293,6 +307,7 @@ const updateStudent = async (req, res) => {
         data.guardianMobile = req.body.guardianMobile;
         data.guardianName = req.body.guardianName;
         data.cgpa = req.body.cgpa;
+        data.tgid = cleanedTgid;
         data.dob = req.body.dob;
         await data.save()
         res.send(`<script>alert("Changes Saved"); window.location.href = "/admin/managestudent";</script>`);
@@ -408,8 +423,7 @@ const updateSubject = async (req, res) => {
 const getTgids = async (req, res) => {
     try {
         console.log("Request Came");
-        const uniqueTgids = await faculty.distinct('tgid');
-        uniqueTgids.sort();
+        const uniqueTgids = await faculty.find().distinct('tgid');
         res.json(uniqueTgids);
 
 

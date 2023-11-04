@@ -15,7 +15,6 @@ router.get('/admin/login', async (req, res) => {
     const token = req.cookies.erpLoggedin;
     const userR = req.cookies.erpUser;
 
-    console.log("new token", token);
     if (!token) {
         return res.render('admin/login.ejs', { errorMessage: null });
     }
@@ -66,7 +65,6 @@ router.get('/student/login', async (req, res) => {
     const token = req.cookies.erpLoggedin;
     const userR = req.cookies.erpUser;
 
-    console.log("new token", token);
     if (!token) {
         return res.render('student/login.ejs', { errorMessage: null });
     }

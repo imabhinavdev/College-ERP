@@ -40,7 +40,6 @@ router.post('/singlesubject', adminController.singleSubject)
 // Already logged in check
 router.get('/login', async (req, res, next) => {
     const token = req.erpLoggedin;
-    console.log("new token", token);
     if (!token) {
         return res.render('login.ejs', { errorMessage: null });
     }

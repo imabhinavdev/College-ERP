@@ -4,10 +4,7 @@ const path = require('path')
 const studentController = require('../controllers/studentController')
 const router = express.Router()
 
-router.get('/dashboard', (req, res) => {
-    res.render('student/studentDashboard.ejs')
-})
-
+router.get('/dashboard', studentController.dashboard);
 
 
 module.exports = router;

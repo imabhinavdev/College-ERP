@@ -66,14 +66,25 @@
         <div class="row mt-4">
             <div class="col-md-6">
                 <canvas class="my-4 " id="myChart"></canvas>
+                <input type="hidden" id="classAttended" value="<%= data.classattended %>">
+                <input type="hidden" id="totalClass" value="<%= data.totalclass %>">
             </div>
             <div class="col-md-6">
                 <div class="card-body">
                     <div class="new-card">
                         <h2>Attendance Summary</h2>
-                        <p>Total Working Days: <span id="totalWorkingDays">0</span></p>
-                        <p>Total Present: <span id="totalPresent">0</span></p>
-                        <p>Total Absent: <span id="totalAbsent">0</span></p>
+                        <p>Attendance Percentage: <span id="attendancePercentage">
+                                <%= (data.classattended / data.totalclass * 100).toFixed(2) %>
+                            </span>%</p>
+                        <p>Total Working Days: <span id="totalWorkingDays">
+                                <%= data.totalclass %>
+                            </span></p>
+                        <p>Total Present: <span id="totalPresent">
+                                <%= data.classattended %>
+                            </span></p>
+                        <p>Total Absent: <span id="totalAbsent">
+                                <%= data.totalclass-data.classattended %>
+                            </span></p>
                     </div>
                 </div>
             </div>
@@ -102,59 +113,53 @@
                 </div>
             </div>
         </div>
-        <script>
-            var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                type: "doughnut",
-                data: {
-                    labels: ["Present", "Absent"],
-                    datasets: [{
-                        data: [70, 30],
-                        backgroundColor: ["#4d44b5", "#ff5733"],
-                        borderColor: "#007bff",
-                        borderWidth: 4,
-                        pointBackgroundColor: "#007bff",
-                    },],
-                },
-                options: {
-                    cutoutPercentage: 70,
-                    scales: {
-                        xAxes: [{
-                            display: false,
-                        },],
-                        yAxes: [{
-                            display: false,
-                            ticks: {
-                                beginAtZero: false,
-                            },
-                        },],
-                    },
-                    legend: {
-                        display: false,
-                    },
-                },
-            });
-        </script>
-        <script>
-            const attendanceData = [
-                { date: "10-02-2023", status: "absent" },
-                // Add more data here
-            ];
-
-            // Function to calculate totals and update the HTML elements
-            function calculateAttendanceTotals() {
-                const totalWorkingDays = attendanceData.length;
-                const totalPresent = attendanceData.filter(entry => entry.status === "present").length;
-                const totalAbsent = attendanceData.filter(entry => entry.status === "absent").length;
-
-                document.getElementById("totalWorkingDays").textContent = totalWorkingDays;
-                document.getElementById("totalPresent").textContent = totalPresent;
-                document.getElementById("totalAbsent").textContent = totalAbsent;
-            }
-
-            calculateAttendanceTotals();
-        </script>
     </div>
+    <script>
+        var ctx = document.getElementById("myChart");
+        var classAttended = parseInt(document.getElementById("classAttended").value);
+        var totalClass = parseInt(document.getElementById("totalClass").value);
+
+        var myChart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: ["Present", "Absent"],
+                datasets: [{
+                    data: [classAttended, totalClass - classAttended],
+                    backgroundColor: ["#4d44b5", "#fff"],
+                    borderColor: "#007bff",
+                    borderWidth: 4,
+                    pointBackgroundColor: "#007bff",
+                }],
+            },
+            options: {
+                cutoutPercentage: 70,
+                legend: {
+                    display: true,
+                },
+            },
+        });
+    </script>
+
+
+    <!-- <script>
+        const attendanceData = [
+            { date: "10-02-2023", status: "absent" },
+            // Add more data here
+        ];
+
+        // Function to calculate totals and update the HTML elements
+        function calculateAttendanceTotals() {
+            const totalWorkingDays = attendanceData.length;
+            const totalPresent = attendanceData.filter(entry => entry.status === "present").length;
+            const totalAbsent = attendanceData.filter(entry => entry.status === "absent").length;
+
+            document.getElementById("totalWorkingDays").textContent = totalWorkingDays;
+            document.getElementById("totalPresent").textContent = totalPresent;
+            document.getElementById("totalAbsent").textContent = totalAbsent;
+        }
+
+        calculateAttendanceTotals(); -->
+    </script>
 </body>
 
 </html>

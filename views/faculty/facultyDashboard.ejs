@@ -69,7 +69,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Manage Student</h5>
                         <p class="card-text">Manage All Students</p>
-                        <a href="./student.html" class="btn btn-primary">Manage</a>
+                        <a href="/faculty/managestudent" class="btn btn-primary">Manage</a>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Show Attendance</h5>
                         <p class="card-text">Show Student Attendance</p>
-                        <a href="show_attendance.html" class="btn btn-primary">Show</a>
+                        <a href="#" class="btn btn-primary">Show</a>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input type="text" id="datepicker1" class="form-control" placeholder="Select a date">
+                            <input type="text" id="datepicker1" class="form-control" placeholder="Select a date" name="date">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="./edit_student_attendence.html" class="btn btn-primary">Submit</a>
+                    <a href="#" class="btn btn-primary">Submit</a>
                 </div>
             </div>
         </div>
@@ -153,29 +153,39 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a href="./edit_student_attendence.html" class="btn btn-primary">Submit</a>
+                    <a href="#" class="btn btn-primary">Submit</a>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            // Initialize the datepickers
-            $('#datepicker1').datepicker({
-                format: 'yyyy-mm-dd', // Format of the selected date
-                todayBtn: 'linked', // Show today button
-                clearBtn: true, // Show clear button
-                autoclose: true, // Close the datepicker when a date is selected
-            });
+   <script>
+    $(document).ready(function () {
+        $('#datepicker1').datepicker({
+            format: 'yyyy-mm-dd',
+            todayBtn: 'linked',
+            clearBtn: true,
+            autoclose: true,
+            endDate: new Date() 
+        });
 
-            $('#datepicker2').datepicker({
-                format: 'yyyy-mm-dd', // Format of the selected date
-                todayBtn: 'linked', // Show today button
-                clearBtn: true, // Show clear button
-                autoclose: true, // Close the datepicker when a date is selected
-            });
-        });    
-    </script>
+        $('#datepicker2').datepicker({
+            format: 'yyyy-mm-dd',
+            todayBtn: 'linked',
+            clearBtn: true,
+            autoclose: true,
+            endDate: new Date() 
+        });
+
+        $('#datepicker3').datepicker({
+            format: 'yyyy-mm-dd',
+            todayBtn: 'linked',
+            clearBtn: true,
+            autoclose: true,
+            endDate: new Date() 
+        });
+    });
+</script>
+
 </body>
 
 </html>

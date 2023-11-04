@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const app = express();
 const bcrypt = require('bcrypt');
 const student = require('../models/student')
+let facultyController = require('../controllers/facultyController')
+const Attendance = require('../models/attendance')
 
 exports.login = async (req, res) => {
     console.log(req.body);
@@ -32,6 +34,11 @@ exports.login = async (req, res) => {
                     httpOnly: true,
                     secure: true,
                 });
+                res.cookie('studentID', user._id, {
+                    httpOnly: true,
+                    secure: true,
+                });
+                console.log(user._id);
                 res.redirect('/student/dashboard')
 
             } else {
@@ -45,5 +52,22 @@ exports.login = async (req, res) => {
         res.send(`<script>alert("Login failed. Please check your credentials."); window.location.href = "/auth/admin/login";</script>`);
 
         console.error('An error occurred:', error);
+    }
+}
+
+
+
+
+exports.dashboard = async (req, res) => {
+    try {
+        let data = await Attendance.findOne({ student: req.cookies.studentID })
+        console.log(data);
+        if (data === null || data.length === 0) {
+            data = { totalclass: 0, classattended: 0 };
+        }
+
+        res.render('student/studentDashboard', { data: data });
+    }
+    catch {
     }
 }
