@@ -1,49 +1,63 @@
 const express = require('express');
-const bodyParser = require('body-parser')
-// ------------Importing Routes---------------
-const adminRoute = require('./routes/adminRoute')
-const facultyRoute = require('./routes/facultyRoute')
-const studentRoute = require('./routes/studentRoute');
-const authMiddleware = require('./middleware/authMiddleware')
-const markedAttendance = require('./controllers/markedAttendance')
-const path = require('path');
-const bcrypt = require('bcrypt');
-const cookieParser = require('cookie-parser');
-const app = express();
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }))
-const session = require('express-session');
-
-app.use(session({
-    secret: 'abhinav', 
-    resave: false,
-    saveUninitialized: false
-}));
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017');
-app.set('view-engine', 'ejs')
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+
+// ------------Importing Routes---------------
+const adminRoute = require('./routes/adminRoute');
+const facultyRoute = require('./routes/facultyRoute');
+const studentRoute = require('./routes/studentRoute');
+const authMiddleware = require('./middleware/authMiddleware');
+const markedAttendance = require('./controllers/markedAttendance');
+
+const app = express();
+
+dotenv.config();
+
+// MongoDB connection
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static('public'));
+
+// Session configuration
+app.use(session({
+    secret: 'abhinav',
+    resave: false,
+    saveUninitialized: false,
+    // Add a store configuration if needed
+    // store: yourSessionStore,
+}));
+
+app.set('view engine', 'ejs');
 
 app.get('/marking', markedAttendance);
 
-app.use('/auth', authMiddleware.router)
+app.use('/auth', authMiddleware.router);
 
 app.use('/admin', authMiddleware.isAdmin, adminRoute);
 app.use('/faculty', authMiddleware.isFaculty, facultyRoute);
 app.use('/student', authMiddleware.isStudent, studentRoute);
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'))
-})
+    res.sendFile(path.join(__dirname, 'public', 'html', 'home.html'));
+});
+
 app.use((req, res) => {
     res.status(404).sendFile(path.join(__dirname, 'public', 'html', '404.html'));
+});
 
-})
+const PORT = process.env.PORT || 3000;
 
-
-app.listen(3000, () => {
-    console.log("Server Listening on http://localhost:3000");
-
+app.listen(PORT, () => {
+    console.log(`Server Listening on http://localhost:${PORT}`);
 });
 
 

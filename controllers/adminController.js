@@ -14,50 +14,49 @@ const subject = require('../models/subject')
 const Attendance = require('../models/attendance')
 // const asyncHandler = require("express-async-handler");
 
-
 const login = async (req, res) => {
-    console.log(req.body);
-    email = req.body.username
-    password = req.body.password
-    console.log(email, password);
+    const email = req.body.username;
+    const password = req.body.password;
 
     try {
-        const user = await admin.findOne({ email: email })
-
+        const user = await admin.findOne({ email: email });
         console.log(user);
-        dbpass = user.password
-        username = user.name
-        bcrypt.compare(password, dbpass, function (err, result) {
-            if (err) {
-                console.error(err);
-            } else if (result) {
-                res.cookie('erpLoggedin', "Logged In", {
-                    httpOnly: true,
-                    secure: true,
-                });
-                res.cookie('erpUser', "isAdmin", {
-                    httpOnly: true,
-                    secure: true,
-                });
-                res.cookie('erpUserName', username, {
-                    httpOnly: true,
-                    secure: true,
-                });
-                res.redirect('/admin/dashboard')
+        if (user) {
+            const dbpass = user.password;
+            const username = user.name;
 
-            } else {
-                console.log('Password is incorrect');
-                res.send(`<script>alert("Login failed. Please check your credentials."); window.location.href = "/auth/admin/login";</script>`);
-
-            }
-        });
-    }
-    catch (error) {
-        res.send(`<script>alert("Login failed. Please check your credentials."); window.location.href = "/auth/admin/login";</script>`);
-
+            bcrypt.compare(password, dbpass, function (err, result) {
+                if (err) {
+                    console.error(err);
+                } else if (result) {
+                    res.cookie('erpLoggedin', 'Logged In', {
+                        httpOnly: true,
+                        secure: true,
+                    });
+                    res.cookie('erpUser', 'isAdmin', {
+                        httpOnly: true,
+                        secure: true,
+                    });
+                    res.cookie('erpUserName', username, {
+                        httpOnly: true,
+                        secure: true,
+                    });
+                    res.redirect('/admin/dashboard');
+                } else {
+                    console.log('Password is incorrect');
+                    res.send('<script>alert("Login failed. Please check your credentials."); window.location.href = "/auth/admin/login";</script>');
+                }
+            });
+        } else {
+            console.log('User not found');
+            res.send('<script>alert("Login failed. User not found."); window.location.href = "/auth/admin/login";</script>');
+        }
+    } catch (error) {
         console.error('An error occurred:', error);
+        res.send('<script>alert("Login failed. Please try again later."); window.location.href = "/auth/admin/login";</script>');
     }
-}
+};
+
 
 
 
