@@ -1,32 +1,9 @@
 {
   "version": 2,
   "routes": [
+    
     {
-      "src": "/auth/admin/login",
-      "dest": "/auth/admin/login"
-    },
-    {
-      "src": "/auth/admin/register",
-      "dest": "/auth/admin/register"
-    },
-    {
-      "src": "/admin/dashboard",
-      "dest": "/admin/dashboard"
-    },
-    {
-      "src": "/faculty/dashboard",
-      "dest": "/faculty/dashboard"
-    },
-    {
-      "src": "/student/dashboard",
-      "dest": "/student/dashboard"
-    },
-    {
-      "src": "/marking",
-      "dest": "/marking"
-    },
-    {
-      "src": "/(.*)",
+      "src": "/",
       "dest": "/"
     }
   ]
