@@ -1,5 +1,4 @@
 const express = require('express');
-const supabase = require('../client');
 const path = require('path');
 const adminRoute = require('../routes/adminRoute')
 const adminController = require('../controllers/adminController')

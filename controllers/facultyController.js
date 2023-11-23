@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }))
-const supabase = require('../client');
 
 const student = require('../models/student')
 const faculty = require('../models/faculty')

@@ -4,7 +4,6 @@ const app = express();
 const path = require('path');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }))
-const supabase = require('../client');
 const bcrypt = require('bcrypt');
 
 const logout = async function logout(req, res) {

@@ -1,5 +1,4 @@
 const express = require('express');
-const supabase = require('../client');
 const path = require('path')
 
 const router = express.Router()
