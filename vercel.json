@@ -8,11 +8,8 @@
     }
   ],
   "routes": [
-    {
-      "src": "/",
-      "dest": "/"      
-    },
-     { "src": "/admin/managefaculty", "dest": "/admin/managefaculty" },
+    { "src": "/", "dest": "/" },
+    { "src": "/admin/managefaculty", "dest": "/admin/managefaculty" },
     { "src": "/admin/searchfaculty", "dest": "/admin/searchfaculty" },
     { "src": "/admin/searchstudent", "dest": "/admin/searchstudent" },
     { "src": "/admin/searchsubject", "dest": "/admin/searchsubject" },
@@ -36,7 +33,6 @@
     { "src": "/auth/admin/login", "dest": "/auth/admin/login" },
     { "src": "/auth/faculty/login", "dest": "/auth/faculty/login" },
     { "src": "/auth/student/login", "dest": "/auth/student/login" },
-    { "src": "/auth/admin/login", "dest": "/auth/admin/login" },
     { "src": "/faculty/login", "dest": "/faculty/login" },
     { "src": "/student/login", "dest": "/student/login" },
     { "src": "/admin/dashboard", "dest": "/admin/dashboard" },
@@ -44,12 +40,11 @@
     { "src": "/student/dashboard", "dest": "/student/dashboard" },
     { "src": "/forgotPassword", "dest": "/forgotPassword" },
     { "src": "/logout", "dest": "/logout" },
-    { "src": "/faculty/dashboard", "dest": "/faculty/dashboard" },
     { "src": "/faculty/managestudent", "dest": "/faculty/managestudent" },
     { "src": "/faculty/searchstudent", "dest": "/faculty/searchstudent" },
     { "src": "/faculty/studenttable", "dest": "/faculty/studenttable" },
     { "src": "/faculty/markattendance", "dest": "/faculty/markattendance" },
     { "src": "/faculty/submitattendance", "dest": "/faculty/submitattendance" },
-      { "src": "/student/dashboard", "dest": "/student/dashboard" }
+    { "src": "/student/dashboard", "dest": "/student/dashboard" }
   ]
 }
